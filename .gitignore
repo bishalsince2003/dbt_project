@@ -1,5 +1,0 @@
-config/db.php
-uploads/
-*.log
-.DS_Store
-.env

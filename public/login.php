@@ -1,8 +1,6 @@
-cat > .env <<'EOF'
-
-EOF<?php
+<?php
 session_start();
-require __DIR__ . '/../config/db.php';
+
 
 // helper: sanitize digits-only
 function clean($v){ return preg_replace('/\D/', '', trim($v)); }
@@ -12,10 +10,10 @@ function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
    Replace the placeholders with your real API key/secret locally.
    Do NOT commit secrets to public repos. */
 function send_otp_sms($to, $msg){
-    $account_sid    = getenv('TWILIO_SID');
-$api_key_sid    = getenv('TWILIO_API_KEY_SID');
-$api_key_secret = getenv('TWILIO_API_KEY_SECRET');
-$from_number    = getenv('TWILIO_FROM');   // <-- replace with your Twilio number
+    $account_sid = "AC9147c169f0b83b29a9bcd7b74b6aa505";
+   $api_key_sid = "SK650a324271bb75d39b16540876375cf7"; 
+   $api_key_secret = "s6716KsCF2Rjn1KxzXw6cRyqgNSblWZY"; 
+   $from_number = "+16503340675";  // <-- replace with your Twilio number
 
     $url = "https://api.twilio.com/2010-04-01/Accounts/$account_sid/Messages.json";
 
