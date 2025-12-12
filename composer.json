@@ -1,6 +1,7 @@
 {
+  "name": "my/app",
+  "description": "PHP project",
   "require": {
     "twilio/sdk": "^6.44"
   }
 }
-
