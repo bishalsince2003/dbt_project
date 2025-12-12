@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Check Application Status</title>
+  <style>
+      body { font-family: Arial; margin: 25px; }
+      label { font-weight: bold; display: block; margin-top: 10px; }
+      input { width: 260px; padding: 6px; margin-top: 6px; }
+      button { margin-top: 12px; padding: 8px 14px; }
+      table { border-collapse: collapse; width: 90%; margin-top: 20px; }
+      th, td { border: 1px solid #aaa; padding: 8px; text-align: left; }
+      th { background: #eee; }
+  </style>
+</head>
+<body>
+
+  <h2>Check Application Status</h2>
+  <p>Enter your Kisan ID to view all your submitted applications.</p>
+
+  <form action="status_check.php" method="POST">
+    <label>Kisan ID *</label>
+    <input type="text" name="kisan_id" required pattern="\d{13}">
+    <button type="submit">Check Status</button>
+  </form>
+
+  <p><a href="apply_form.html">Apply for a Scheme</a></p>
+
+</body>
+</html>
