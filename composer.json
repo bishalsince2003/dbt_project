@@ -1,3 +1,7 @@
-git add composer.json
-git commit -m "add composer.json"
-git push
+{
+  "name": "my/app",
+  "description": "PHP project",
+  "require": {
+    "twilio/sdk": "^6.44"
+  }
+}
