@@ -42,26 +42,6 @@ class Start extends TwiML {
     }
 
     /**
-     * Add Transcription child.
-     *
-     * @param array $attributes Optional attributes
-     * @return Transcription Child element.
-     */
-    public function transcription($attributes = []): Transcription {
-        return $this->nest(new Transcription($attributes));
-    }
-
-    /**
-     * Add Recording child.
-     *
-     * @param array $attributes Optional attributes
-     * @return Recording Child element.
-     */
-    public function recording($attributes = []): Recording {
-        return $this->nest(new Recording($attributes));
-    }
-
-    /**
      * Add Action attribute.
      *
      * @param string $action Action URL

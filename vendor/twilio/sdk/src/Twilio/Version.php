@@ -50,8 +50,8 @@ abstract class Version {
 
     public function request(string $method, string $uri,
                             array $params = [], array $data = [], array $headers = [],
-                            ?string $username = null, ?string $password = null,
-                            ?int $timeout = null): Response {
+                            string $username = null, string $password = null,
+                            int $timeout = null): Response {
         $uri = $this->relativeUri($uri);
         return $this->getDomain()->request(
             $method,
@@ -96,8 +96,8 @@ abstract class Version {
      */
     public function fetch(string $method, string $uri,
                           array $params = [], array $data = [], array $headers = [],
-                          ?string $username = null, ?string $password = null,
-                          ?int $timeout = null) {
+                          string $username = null, string $password = null,
+                          int $timeout = null) {
         $response = $this->request(
             $method,
             $uri,
@@ -120,20 +120,10 @@ abstract class Version {
     /**
      * @throws TwilioException
      */
-    public function patch(string $method, string $uri,
-                           array $params = [], array $data = [], array $headers = [],
-                           ?string $username = null, ?string $password = null,
-                           ?int $timeout = null) {
-        return $this->update($method, $uri, $params, $data, $headers, $username, $password, $timeout);
-    }
-
-    /**
-     * @throws TwilioException
-     */
     public function update(string $method, string $uri,
                            array $params = [], array $data = [], array $headers = [],
-                           ?string $username = null, ?string $password = null,
-                           ?int $timeout = null) {
+                           string $username = null, string $password = null,
+                           int $timeout = null) {
         $response = $this->request(
             $method,
             $uri,
@@ -157,8 +147,8 @@ abstract class Version {
      */
     public function delete(string $method, string $uri,
                            array $params = [], array $data = [], array $headers = [],
-                           ?string $username = null, ?string $password = null,
-                           ?int $timeout = null): bool {
+                           string $username = null, string $password = null,
+                           int $timeout = null): bool {
         $response = $this->request(
             $method,
             $uri,
@@ -170,15 +160,14 @@ abstract class Version {
             $timeout
         );
 
-        // check for 2xx status code is already present here
         if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
             throw $this->exception($response, 'Unable to delete record');
         }
 
-        return true; // if response code is 2XX, deletion was successful
+        return $response->getStatusCode() === 204;
     }
 
-    public function readLimits(?int $limit = null, ?int $pageSize = null): array {
+    public function readLimits(int $limit = null, int $pageSize = null): array {
         if ($limit && $pageSize === null) {
             $pageSize = $limit;
         }
@@ -194,8 +183,8 @@ abstract class Version {
 
     public function page(string $method, string $uri,
                          array $params = [], array $data = [], array $headers = [],
-                         ?string $username = null, ?string $password = null,
-                         ?int $timeout = null): Response {
+                         string $username = null, string $password = null,
+                         int $timeout = null): Response {
         return $this->request(
             $method,
             $uri,
@@ -217,8 +206,8 @@ abstract class Version {
      */
     public function create(string $method, string $uri,
                            array $params = [], array $data = [], array $headers = [],
-                           ?string $username = null, ?string $password = null,
-                           ?int $timeout = null) {
+                           string $username = null, string $password = null,
+                           int $timeout = null) {
         $response = $this->request(
             $method,
             $uri,
