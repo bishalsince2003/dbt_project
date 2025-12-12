@@ -1,6 +1,1 @@
-{
-  "require": {
-    "twilio/sdk": "^6.44"
-  }
-}
-
+{"require": {"twilio/sdk": "^6.44"}}
