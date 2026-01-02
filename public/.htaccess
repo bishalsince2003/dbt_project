@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Agar file ya folder exist karta ho to direct serve karo
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Sab requests index.php ko bhejo
+RewriteRule ^ index.php [QSA,L]
