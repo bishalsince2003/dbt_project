@@ -27,34 +27,58 @@ function verify_csrf_token($token) {
 $csrf = generate_csrf_token();
 
 // ---------- Handle Approve / Reject (POST) ----------
+// ---------- Handle Approve / Reject (POST) ----------
 $flash = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['app_id'], $_POST['action'], $_POST['csrf_token'])) {
+
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST' &&
+    isset($_POST['app_id'], $_POST['action'], $_POST['csrf_token'])
+) {
 
     if (!verify_csrf_token($_POST['csrf_token'])) {
         $flash = 'Invalid request (CSRF).';
     } else {
-        $app_id = intval($_POST['app_id']);
-        $action = $_POST['action'] === 'approve' ? 'APPROVED' : 'REJECTED';
 
-        $stmt = $mysqli->prepare("UPDATE applications SET status=? WHERE app_id=?");
-        if ($stmt) {
-            $stmt->bind_param("si", $action, $app_id);
+        $app_id = (int) $_POST['app_id'];
+        $action = $_POST['action'];
+
+        if ($action === 'approve') {
+
+            // APPROVE + FORWARD TO BANK
+            $stmt = $mysqli->prepare(
+                "UPDATE applications 
+                 SET status='APPROVED', bank_status='SENT' 
+                 WHERE app_id=?"
+            );
+            $stmt->bind_param("i", $app_id);
             $stmt->execute();
             $stmt->close();
-            // simple flash message
-            $flash = "Application #{$app_id} updated to {$action}.";
-        } else {
-            $flash = "DB error: " . e($mysqli->error);
+
+            $flash = "Application #{$app_id} approved and forwarded to bank.";
+
+        } elseif ($action === 'reject') {
+
+            // REJECT
+            $stmt = $mysqli->prepare(
+                "UPDATE applications 
+                 SET status='REJECTED' 
+                 WHERE app_id=?"
+            );
+            $stmt->bind_param("i", $app_id);
+            $stmt->execute();
+            $stmt->close();
+
+            $flash = "Application #{$app_id} rejected.";
         }
     }
-    // regenerate token after state change to reduce replay possibility
+
+    // regenerate CSRF + redirect
     $_SESSION['csrf_token'] = bin2hex(random_bytes(24));
-    $csrf = $_SESSION['csrf_token'];
-    // redirect PRG to avoid resubmits (preserve flash in session)
     $_SESSION['flash'] = $flash;
     header("Location: admin_applications.php");
     exit;
 }
+
 
 // Show flash from session if present
 if (!empty($_SESSION['flash'])) {
@@ -164,6 +188,8 @@ $uploads_base = realpath(__DIR__ . '/../../uploads') ?: (__DIR__ . '/../../uploa
               <th>Kisan ID</th>
               <th>Scheme</th>
               <th>Status</th>
+              <th>Bank Status</th>
+
               <th>Date</th>
               <th>Document</th>
               <th>Action</th>
@@ -186,6 +212,26 @@ $uploads_base = realpath(__DIR__ . '/../../uploads') ?: (__DIR__ . '/../../uploa
                     ?>
                     <span class="badge bg-<?= $badgeClass ?>"><?= e($status) ?></span>
                   </td>
+                  <td>
+<?php
+$bankStatus = $row['bank_status'] ?? '';
+
+if ($bankStatus === 'SENT') {
+    echo '<span class="badge bg-primary">SENT TO BANK</span>';
+}
+elseif ($bankStatus === 'PAID') {
+    echo '<span class="badge bg-success">PAID</span>';
+}
+elseif ($bankStatus === 'REJECTED') {
+    echo '<span class="badge bg-danger">BANK REJECTED</span>';
+}
+else {
+    echo '<span class="text-muted">—</span>';
+}
+?>
+</td>
+
+
                   <td><?= e($row['applied_at']) ?></td>
                   <td>
                     <?php if (!empty($row['doc_path'])):

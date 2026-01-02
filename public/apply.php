@@ -71,26 +71,11 @@ $csrf = $_SESSION['csrf_apply'];
     .card { border-radius:10px; }
     .small-muted { color:#6c757d; }
   </style>
+  <link rel="stylesheet" href="/dbt_project/public/assets/css/common.css">
 </head>
 <body>
-    <!-- Top bar -->
-<header class="topbar">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-    <div class="brand">
-      <img src="img/logo.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DBT'">
-      <div>
-        <div style="font-weight:700; color:var(--brand)">DBT Portal</div>
-        <div class="small-note">Integrated Beneficiary Management</div>
-      </div>
-    </div>
+ <?php include __DIR__ . '/topbar.php'; ?>
 
-    <div class="d-none d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
-    </div>
-  </div>
-</header>
   <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
@@ -146,14 +131,14 @@ $csrf = $_SESSION['csrf_apply'];
 
               <div class="row g-3">
                 <div class="col-md-6 mb-3">
-                  <label class="form-label fw-semibold">Bank Account (optional)</label>
-                  <input type="text" name="bank_account" class="form-control" pattern="\d{9,18}" title="Enter numeric account number (9-18 digits)">
+                  <label class="form-label fw-semibold">Bank Account </label>
+                  <input type="text" name="bank_account" class="form-control" pattern="\d{9,18}" title="Enter numeric account number (9-18 digits)" required>
                   <div class="form-text small-muted">If you want direct transfer. Enter numbers only.</div>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                  <label class="form-label fw-semibold">Upload Document (optional)</label>
-                  <input class="form-control" type="file" name="doc" accept=".pdf,.jpg,.jpeg,.png" id="docInput">
+                  <label class="form-label fw-semibold">Upload Document </label>
+                  <input class="form-control" type="file" name="doc" accept=".pdf,.jpg,.jpeg,.png" id="docInput" >
                   <div class="form-text small-muted">Allowed: PDF, JPG, PNG. Max 5 MB.</div>
                 </div>
               </div>

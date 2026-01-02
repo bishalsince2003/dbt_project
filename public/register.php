@@ -373,31 +373,17 @@ $mysqli->close();
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Registration Result</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/dbt_project/public/assets/css/common.css">
+
   <style>
     body { background:#f4f6f9; }
     .card { border-radius:10px; }
   </style>
 </head>
 <body>
+    <!-- Top bar -->
+<?php include __DIR__ . '/topbar.php'; ?>
 
-<!-- Top bar -->
-<header class="topbar">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-    <div class="brand">
-      <img src="img/logo.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DBT'">
-      <div>
-        <div style="font-weight:700; color:var(--brand)">DBT Portal</div>
-        <div class="small-note">Integrated Beneficiary Management</div>
-      </div>
-    </div>
-
-    <div class="d-none d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
-    </div>
-  </div>
-</header>
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-8">

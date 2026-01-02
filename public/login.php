@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+require __DIR__ . '/../config/db.php';
+require __DIR__ . '/env.php'; 
 
 // helper: sanitize digits-only
 function clean($v){ return preg_replace('/\D/', '', trim($v)); }
@@ -10,10 +11,11 @@ function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
    Replace the placeholders with your real API key/secret locally.
    Do NOT commit secrets to public repos. */
 function send_otp_sms($to, $msg){
-    $account_sid = "AC9147c169f0b83b29a9bcd7b74b6aa505";
-   $api_key_sid = "SK650a324271bb75d39b16540876375cf7"; 
-   $api_key_secret = "s6716KsCF2Rjn1KxzXw6cRyqgNSblWZY"; 
-   $from_number = "+16503340675";  // <-- replace with your Twilio number
+    $account_sid     = getenv("TWILIO_ACCOUNT_SID");
+$api_key_sid     = getenv("TWILIO_API_KEY_SID");
+$api_key_secret = getenv("TWILIO_API_KEY_SECRET");
+$from_number     = getenv("TWILIO_FROM_NUMBER");
+  
 
     $url = "https://api.twilio.com/2010-04-01/Accounts/$account_sid/Messages.json";
 
@@ -155,26 +157,12 @@ if (isset($_POST['action']) && $_POST['action'] === 'verify_otp') {
   /* .brand { background: linear-gradient(90deg,#0b5ed7,#1768ff); color:#fff; padding:12px 16px; border-radius:8px; font-weight:700; } */
   .card { border-radius:10px; }
 </style>
+<link rel="stylesheet" href="/dbt_project/public/assets/css/common.css">
+
 </head>
 <body>
-    <!-- Top bar -->
-<header class="topbar">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-    <div class="brand">
-      <img src="img/logo.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DBT'">
-      <div>
-        <div style="font-weight:700; color:var(--brand)">DBT Portal</div>
-        <div class="small-note">Integrated Beneficiary Management</div>
-      </div>
-    </div>
-
-    <div class="d-none d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
-    </div>
-  </div>
-</header>
+  <?php include __DIR__ . '/topbar.php'; ?>
+  
 
   <div class="container py-5">
     <div class="row justify-content-center">
@@ -208,6 +196,12 @@ if (isset($_POST['action']) && $_POST['action'] === 'verify_otp') {
               <div class="d-flex gap-2 mb-3">
                 <button type="submit" name="action" value="send_otp" class="btn btn-primary">Send OTP</button>
                 <button type="button" class="btn btn-outline-secondary" onclick="document.querySelector('[name=mobile]').value='';document.querySelector('[name=kisan_id]').value='';">Clear</button>
+                <p class="mt-3 text-center small">
+                      New user?
+                      <a href="register.php" class="fw-semibold text-primary text-decoration-none">
+                      Create an account
+                      </a>
+                  </p>
               </div>
 
               <?php if (isset($_SESSION['login_otp'])): ?>
@@ -223,7 +217,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'verify_otp') {
                     <input type="hidden" name="kisan_id" value="<?= e($_SESSION['login_kisan'] ?? '') ?>">
                     <input type="hidden" name="mobile" value="<?= e($_SESSION['login_mobile'] ?? '') ?>">
                     <button type="submit" name="action" value="send_otp" class="btn btn-outline-primary">Resend OTP</button>
+                  
                   </form>
+                  
+
                 </div>
                 <div class="mt-2 text-muted small">
                   <?php
@@ -238,7 +235,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'verify_otp') {
             </form>
 
             <hr>
-            <div class="small text-muted">Need help? Contact support: help@example.gov.in</div>
+            <div class="small text-muted">Need help? Contact support: bishalsinghtas@gmail.com</div>
           </div>
         </div>
 

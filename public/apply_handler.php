@@ -228,26 +228,11 @@ unset($_SESSION['csrf_apply']);
     .page-wrap { max-width:1000px; margin:28px auto; }
     .small-note { color:var(--muted); }
  </style>
+ <link rel="stylesheet" href="/dbt_project/public/assets/css/common.css">
 </head>
 <body>
     <!-- Top bar -->
-<header class="topbar">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-    <div class="brand">
-      <img src="img/logo.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DBT'">
-      <div>
-        <div style="font-weight:700; color:var(--brand)">DBT Portal</div>
-        <div class="small-note">Integrated Beneficiary Management</div>
-      </div>
-    </div>
-
-    <div class="d-none d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
-    </div>
-  </div>
-</header>
+ <?php include __DIR__ . '/topbar.php'; ?>
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-8">

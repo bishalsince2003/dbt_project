@@ -59,27 +59,11 @@ function e($v) {
       .sidebar { margin-bottom:1rem; }
     }
   </style>
+   <link rel="stylesheet" href="/dbt_project/public/assets/css/common.css">
 </head>
 <body>
 
-<!-- Top bar -->
-<header class="topbar">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-    <div class="brand">
-      <img src="img/logo.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DBT'">
-      <div>
-        <div style="font-weight:700; color:var(--brand)">DBT Portal</div>
-        <div class="small-note">Integrated Beneficiary Management</div>
-      </div>
-    </div>
-
-    <div class="d-none d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
-    </div>
-  </div>
-</header>
+<?php include __DIR__ . '/topbar.php'; ?>
 
   <header class="gov-topbar">
     <div class="container d-flex align-items-center gap-3">
@@ -174,7 +158,7 @@ function e($v) {
             <div class="d-flex gap-2 flex-wrap">
               <a href="apply.php" class="btn btn-primary">Apply for Scheme</a>
               <a href="profile_edit.php" class="btn btn-ghost">Edit Profile</a>
-              <a href="documents.php" class="btn btn-ghost">My Documents</a>
+              <a href="my_status.php" class="btn btn-ghost">Application Status</a>
               <a href="help.php" class="btn btn-outline-secondary">Help / FAQs</a>
             </div>
           </div>

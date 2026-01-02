@@ -10,10 +10,10 @@ function clean_mobile($m){
 function send_sms_twilio($toE164, $msg) {
 
     // ⭐⭐⭐ CHANGE THESE ⭐⭐⭐
-    $account_sid = "AC9147c169f0b83b29a9bcd7b74b6aa505";
-   $api_key_sid = "SK650a324271bb75d39b16540876375cf7"; 
-   $api_key_secret = "s6716KsCF2Rjn1KxzXw6cRyqgNSblWZY"; 
-   $from_number = "+16503340675";    
+   $account_sid     = getenv("TWILIO_ACCOUNT_SID");
+    $api_key_sid     = getenv("TWILIO_API_KEY_SID");
+    $api_key_secret  = getenv("TWILIO_API_KEY_SECRET");
+    $from_number     = getenv("TWILIO_FROM_NUMBER");  
 
     $url = "https://api.twilio.com/2010-04-01/Accounts/$account_sid/Messages.json";
 

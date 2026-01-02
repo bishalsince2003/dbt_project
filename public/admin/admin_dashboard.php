@@ -58,24 +58,33 @@ if (isset($mysqli) && $mysqli instanceof mysqli) {
     /* .topbar { background: linear-gradient(90deg,#0b5ed7,#1768ff); color: #fff; padding:12px 16px; border-radius:8px; font-weight:700; } */
     .card-stat { border-radius:10px; }
     .small-muted { color:#6c757d; }
+    .brand-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
   </style>
 </head>
 <body>
     <!-- Top bar -->
 <header class="topbar">
   <div class="container d-flex justify-content-between align-items-center py-2">
-    <div class="brand">
-      <img src="logo.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DBT'">
-      <div>
-        <div style="font-weight:700; color:var(--brand)">DBT Portal</div>
-        <div class="small-note">Integrated Beneficiary Management</div>
-      </div>
-    </div>
+    <a href="/dbt_project/public/index.php" class="text-decoration-none">
+  <div class="d-flex align-items-center gap-2">
+    <img src="/dbt_project/public/img/logo.png"
+         alt="DBT Logo"
+         class="brand-logo">
 
+    <div class="lh-sm">
+      <div class="fw-bold text-primary">DBT Portal</div>
+      <small class="text-muted">Integrated Beneficiary Management</small>
+    </div>
+  </div>
+</a>
     <div class="d-none d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
+      <!-- <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a> -->
+      <!-- <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a> -->
+      <!-- <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a> -->
     </div>
   </div>
 </header>

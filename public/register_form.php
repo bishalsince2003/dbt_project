@@ -1,22 +1,25 @@
 <?php
 session_start();
-
+require __DIR__ . '/env.php'; 
 // ---------- helpers ----------
 function clean_mobile($m) { return preg_replace('/\D/', '', trim($m)); }
 
 /* Twilio SMS sending */
 function send_sms_twilio($toE164, $msg) { 
-  $account_sid = "AC9147c169f0b83b29a9bcd7b74b6aa505";
-   $api_key_sid = "SK650a324271bb75d39b16540876375cf7"; 
-   $api_key_secret = "s6716KsCF2Rjn1KxzXw6cRyqgNSblWZY"; 
-   $from_number = "+16503340675";
+    
+
+    $account_sid     = getenv("TWILIO_ACCOUNT_SID");
+    $api_key_sid     = getenv("TWILIO_API_KEY_SID");
+    $api_key_secret  = getenv("TWILIO_API_KEY_SECRET");
+    $from_number     = getenv("TWILIO_FROM_NUMBER");
+
 
     $url = "https://api.twilio.com/2010-04-01/Accounts/$account_sid/Messages.json";
     $data = http_build_query([
         "To"   => $toE164,
         "From" => $from_number,
         "Body" => $msg
-    ]);
+        ]);
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -140,32 +143,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         margin-bottom:20px;
     }
 </style>
+<link rel="stylesheet" href="/dbt_project/public/assets/css/common.css">
 
 </head>
 <body>
-  <!-- Top bar -->
-<header class="bg-white border-bottom">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-
-    <!-- LEFT: clickable brand (logo + text) -->
-    <a href="index.php" class="d-flex align-items-center gap-2 text-decoration-none flex-shrink-0">
-      <img src="img/logo.png"
-           alt="logo"
-           
-           class="rounded"
-           style="height:40px;width:40px;object-fit:cover;">
-      <div>
-        <div class="fw-bold mb-0">DBT Portal</div>
-        <div class="small-note text-muted ">Integrated Beneficiary Management</div>
-      </div>
-    </a>
-    <div class="d-flex d-md-flex align-items-center gap-2">
-      <a href="register_form.php" class="btn btn-outline-success btn-sm">Register</a>
-      <a href="login.php" class="btn btn-outline-primary btn-sm">Farmer Login</a>
-      <a href="admin/admin_login.php" class="btn btn-primary btn-sm">Admin Sign In</a>
-    </div>
-  </div>
-</header>
+<?php include __DIR__ . '/topbar.php'; ?>
 
 
 <div class="container mt-4 mb-5">
@@ -179,7 +161,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <form method="POST" enctype="multipart/form-data">
 
             <!-- MOBILE -->
+           
             <div class="mb-3">
+              
+
                 <label class="form-label fw-bold">Mobile Number *</label>
                 <div class="input-group">
                     <input type="text" class="form-control"
